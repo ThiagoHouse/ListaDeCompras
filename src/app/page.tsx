@@ -11,7 +11,16 @@ const categorias = [
   "Utilidades"
 ];
 
-function getEmptyItems() {
+type Item = {
+  text: string;
+  checked: boolean;
+};
+
+type ItemsPorCategoria = {
+  [categoria: string]: Item[];
+};
+
+function getEmptyItems(): ItemsPorCategoria {
   return {
     Bruto: [],
     Padaria: [],
@@ -25,10 +34,10 @@ function getEmptyItems() {
 export default function Home() {
   // Estado para saber se está no client
   const [isClient, setIsClient] = useState(false);
-  const [items, setItems] = useState(getEmptyItems);
+  const [items, setItems] = useState<ItemsPorCategoria>(getEmptyItems);
 
   // Inputs separados para cada categoria
-  const [newItems, setNewItems] = useState(getEmptyItems());
+  const [newItems, setNewItems] = useState<{ [categoria: string]: string }>(getEmptyItems());
 
   // Edição
   const [editing, setEditing] = useState<{ categoria: string | null; index: number | null }>({ categoria: null, index: null });
@@ -104,7 +113,6 @@ export default function Home() {
 
   return (
     <div style={{ maxWidth: 500, margin: "40px auto", fontFamily: "sans-serif" }}>
-      {/* <h1>Lista de Compras</h1> */}
       {categorias.map((categoria) => (
         <div key={categoria} style={{ marginBottom: 24 }}>
           <h2 className="categoria-titulo" style={{ marginBottom: 8, marginTop: 16 }}>{categoria}</h2>
@@ -122,7 +130,7 @@ export default function Home() {
             <button className="botao-adicionar" onClick={() => addItem(categoria)}>Adicionar</button>
           </div>
           <ul className="lista-compras-lista">
-            {items[categoria].map((item: any, index: number) => (
+            {items[categoria].map((item, index) => (
               <li
                 key={index}
                 className={`lista-compras-item${item.checked ? " checked" : ""}`}
