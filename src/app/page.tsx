@@ -129,7 +129,7 @@ export default function Home() {
       {categorias.map((categoria) => (
         <div key={categoria} style={{ marginBottom: 24 }}>
           <h2 className="categoria-titulo" style={{ marginBottom: 8, marginTop: 16 }}>{categoria}</h2>
-          <div style={{ display: "flex", gap: 8, marginBottom: 0 }}>
+          <div className="pb-2" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
             <input
               className="input"
               type="text"
