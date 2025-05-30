@@ -20,6 +20,7 @@ type ItemsPorCategoria = {
   [categoria: string]: Item[];
 };
 
+// Função para inicializar o estado dos itens (arrays)
 function getEmptyItems(): ItemsPorCategoria {
   return {
     Bruto: [],
@@ -31,13 +32,25 @@ function getEmptyItems(): ItemsPorCategoria {
   };
 }
 
+// Função para inicializar o estado dos inputs (strings)
+function getEmptyNewItems(): { [categoria: string]: string } {
+  return {
+    Bruto: "",
+    Padaria: "",
+    Carnes: "",
+    "Produto de Limpeza": "",
+    Hortifrut: "",
+    Utilidades: "",
+  };
+}
+
 export default function Home() {
   // Estado para saber se está no client
   const [isClient, setIsClient] = useState(false);
   const [items, setItems] = useState<ItemsPorCategoria>(getEmptyItems);
 
-  // Inputs separados para cada categoria
-  const [newItems, setNewItems] = useState<{ [categoria: string]: string }>(getEmptyItems());
+  // Inputs separados para cada categoria (corrigido para string)
+  const [newItems, setNewItems] = useState<{ [categoria: string]: string }>(getEmptyNewItems());
 
   // Edição
   const [editing, setEditing] = useState<{ categoria: string | null; index: number | null }>({ categoria: null, index: null });
