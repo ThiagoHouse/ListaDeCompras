@@ -20,7 +20,87 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0 8px; /* Espaço lateral em todas as telas */
+}
+
+@media (min-width: 600px) {
+  body {
+    padding: 0; /* Remove o padding lateral em telas grandes */
+  }
+}
+
+.lista-compras-item span {
+  margin-left: 8px;
+}
+
+.lista-compras-lista {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.lista-compras-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1px; /* Menos espaçamento */
+  padding: 0px 0;
+  padding-right: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  background: #fff;
+  border-radius: 3px;
+}
+
+.lista-compras-item:last-child {
+  border-bottom: none;
+}
+
+.lista-compras-item.checked span {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.lista-compras-item input[type="checkbox"] {
+  margin-right: 1px;
+}
+
+.lista-compras-item button {
+  margin-left: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  background: #e3e3e3;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.botao-adicionar {
+  margin-left: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  background: #bdc2dd;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.lista-compras-item button:hover {
+  background: #d1d1d1;
+}
+
+.input {
+  font-size: 12px;
+}
+
+.categoria-titulo {
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-bottom: 2px;
+  margin-top: 16px;
+  color: #222;
 }
