@@ -170,7 +170,7 @@ export default function Home() {
                       style={{ flex: 1, cursor: "pointer" }}
                       onClick={() => toggleCheck(categoria, index)}
                     >
-                      {item.text}
+                     {item.text}
                     </span>
                   )}
                   <button

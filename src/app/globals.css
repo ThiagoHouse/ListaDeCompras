@@ -54,6 +54,14 @@ body {
   border-radius: 3px;
 }
 
+.lista-compras-item span::before {
+  content: "•";
+  display: inline-block;
+  margin-right: 8px;
+  color: #101624; /* escolha a cor que preferir */
+  font-size: 1.1em;
+}
+
 .lista-compras-item:last-child {
   border-bottom: none;
 }
@@ -69,7 +77,7 @@ body {
 
 .lista-compras-item button {
   margin-left: 4px;
-  padding: 2px 8px;
+  padding: 4px 15px;
   font-size: 14px;
   background: #e3e3e3;
   border: none;
@@ -105,6 +113,21 @@ body {
   color: #222;
 }
 
+
+
+/* Adicione ao seu globals.css */
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 0 16px;
+  font-family: sans-serif;
+}
+
+.botao-adicionar {
+  padding: 6px 16px; /* aumente conforme desejar */
+  font-size: 12px;
+}
+
 .botao-editar {
   background: #e6f0ff;
   color: #2563eb;
@@ -117,14 +140,7 @@ body {
   background: #ffe6e6;
   color: #dc2626;
 }
+
 .botao-remover:hover {
   background: #fecaca;
-}
-
-/* Adicione ao seu globals.css */
-.container {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 0 16px;
-  font-family: sans-serif;
 }
