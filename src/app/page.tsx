@@ -86,13 +86,13 @@ export default function Home() {
 
   // Remover item
   const removeItem = (categoria: string, index: number) => {
-  const confirm = window.confirm("Tem certeza que deseja remover este item?");
-  if (!confirm) return;
-  setItems({
-    ...items,
-    [categoria]: items[categoria].filter((_, i) => i !== index)
-  });
-};
+    const confirm = window.confirm("Tem certeza que deseja remover este item?");
+    if (!confirm) return;
+    setItems({
+      ...items,
+      [categoria]: items[categoria].filter((_, i) => i !== index)
+    });
+  };
 
   // Marcar/desmarcar item
   const toggleCheck = (categoria: string, index: number) => {
@@ -129,57 +129,59 @@ export default function Home() {
   if (!isClient) return null;
 
   return (
-    <div style={{ maxWidth: 500, margin: "40px auto", fontFamily: "sans-serif" }}>
-      {categorias.map((categoria) => (
-        <div key={categoria} style={{ marginBottom: 24 }}>
-          <h2 className="categoria-titulo" style={{ marginBottom: 8, marginTop: 16 }}>{categoria}</h2>
-          <div className="pb-2" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
-            <input
-              className="input"
-              type="text"
-              placeholder={`Novo item em ${categoria}`}
-              value={newItems[categoria] || ""}
-              onChange={e =>
-                setNewItems({ ...newItems, [categoria]: e.target.value })
-              }
-              onKeyDown={e => e.key === "Enter" && addItem(categoria)}
-            />
-            <button className="botao-adicionar" onClick={() => addItem(categoria)}><FaPlus /></button>
+    <div className="container">
+      <div style={{ maxWidth: 500, margin: "40px auto", fontFamily: "sans-serif" }}>
+        {categorias.map((categoria) => (
+          <div key={categoria} style={{ marginBottom: 24 }}>
+            <h2 className="categoria-titulo" style={{ marginBottom: 8, marginTop: 16 }}>{categoria}</h2>
+            <div className="pb-2" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
+              <input
+                className="input"
+                type="text"
+                placeholder={`Novo item em ${categoria}`}
+                value={newItems[categoria] || ""}
+                onChange={e =>
+                  setNewItems({ ...newItems, [categoria]: e.target.value })
+                }
+                onKeyDown={e => e.key === "Enter" && addItem(categoria)}
+              />
+              <button className="botao-adicionar" onClick={() => addItem(categoria)}><FaPlus /></button>
+            </div>
+            <ul className="lista-compras-lista">
+              {items[categoria].map((item, index) => (
+                <li
+                  key={index}
+                  className={`lista-compras-item${item.checked ? " checked" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={item.checked}
+                    onChange={() => toggleCheck(categoria, index)}
+                  />
+                  {editing.categoria === categoria && editing.index === index ? (
+                    <>
+                      <input
+                        value={editingText}
+                        onChange={e => setEditingText(e.target.value)}
+                        onKeyDown={e => e.key === "Enter" && saveEdit()}
+                        style={{ flex: 1, marginRight: 8 }}
+                      />
+                      <button onClick={saveEdit}>Salvar</button>
+                      <button onClick={() => setEditing({ categoria: null, index: null })}>Cancelar</button>
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ flex: 1 }}>{item.text}</span>
+                      <button className="botao-editar" onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}><FaEdit /></button>
+                      <button className="botao-remover" onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}><FaTrash /></button>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="lista-compras-lista">
-            {items[categoria].map((item, index) => (
-              <li
-                key={index}
-                className={`lista-compras-item${item.checked ? " checked" : ""}`}
-              >
-                <input
-                  type="checkbox"
-                  checked={item.checked}
-                  onChange={() => toggleCheck(categoria, index)}
-                />
-                {editing.categoria === categoria && editing.index === index ? (
-                  <>
-                    <input
-                      value={editingText}
-                      onChange={e => setEditingText(e.target.value)}
-                      onKeyDown={e => e.key === "Enter" && saveEdit()}
-                      style={{ flex: 1, marginRight: 8 }}
-                    />
-                    <button onClick={saveEdit}>Salvar</button>
-                    <button onClick={() => setEditing({ categoria: null, index: null })}>Cancelar</button>
-                  </>
-                ) : (
-                  <>
-                    <span style={{ flex: 1 }}>{item.text}</span>
-                    <button className="botao-editar" onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}><FaEdit /></button>
-                    <button className="botao-remover" onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}><FaTrash /></button>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
