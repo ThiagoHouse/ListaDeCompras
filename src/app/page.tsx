@@ -137,6 +137,7 @@ export default function Home() {
             <div className="pb-2 adicionar-container" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
               <input
                 className="input"
+                style={{ flex: 1 }} // Adicione esta linha
                 type="text"
                 placeholder={`Novo item em ${categoria}`}
                 value={newItems[categoria] || ""}
