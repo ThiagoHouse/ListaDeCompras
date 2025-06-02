@@ -86,11 +86,13 @@ export default function Home() {
 
   // Remover item
   const removeItem = (categoria: string, index: number) => {
-    setItems({
-      ...items,
-      [categoria]: items[categoria].filter((_, i) => i !== index)
-    });
-  };
+  const confirm = window.confirm("Tem certeza que deseja remover este item?");
+  if (!confirm) return;
+  setItems({
+    ...items,
+    [categoria]: items[categoria].filter((_, i) => i !== index)
+  });
+};
 
   // Marcar/desmarcar item
   const toggleCheck = (categoria: string, index: number) => {
