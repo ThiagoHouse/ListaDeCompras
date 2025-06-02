@@ -150,33 +150,22 @@ export default function Home() {
             <ul className="lista-compras-lista">
               {items[categoria].map((item, index) => (
                 <li
-                  key={index}
-                  className={`lista-compras-item${item.checked ? " checked" : ""}`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={item.checked}
-                    onChange={() => toggleCheck(categoria, index)}
-                  />
-                  {editing.categoria === categoria && editing.index === index ? (
-                    <>
-                      <input
-                        value={editingText}
-                        onChange={e => setEditingText(e.target.value)}
-                        onKeyDown={e => e.key === "Enter" && saveEdit()}
-                        style={{ flex: 1, marginRight: 8 }}
-                      />
-                      <button onClick={saveEdit}>Salvar</button>
-                      <button onClick={() => setEditing({ categoria: null, index: null })}>Cancelar</button>
-                    </>
-                  ) : (
-                    <>
-                      <span style={{ flex: 1 }}>{item.text}</span>
-                      <button className="botao-editar" onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}><FaEdit /></button>
-                      <button className="botao-remover" onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}><FaTrash /></button>
-                    </>
-                  )}
-                </li>
+  key={index}
+  className={`lista-compras-item${item.checked ? " checked" : ""}`}
+>
+  <span
+    style={{ flex: 1, cursor: "pointer" }}
+    onClick={() => toggleCheck(categoria, index)}
+  >
+    {item.text}
+  </span>
+  <button className="botao-editar" onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}>
+    <FaEdit />
+  </button>
+  <button className="botao-remover" onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}>
+    <FaTrash />
+  </button>
+</li>
               ))}
             </ul>
           </div>
