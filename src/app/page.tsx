@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa"; // Adicione esta linha
+import { FaEdit, FaTrash, FaPlus } from "react-icons/fa"; // Adicione esta linha
 
 
 const categorias = [
@@ -142,7 +142,7 @@ export default function Home() {
               }
               onKeyDown={e => e.key === "Enter" && addItem(categoria)}
             />
-            <button className="botao-adicionar" onClick={() => addItem(categoria)}>Adicionar</button>
+            <button className="botao-adicionar" onClick={() => addItem(categoria)}><FaPlus /></button>
           </div>
           <ul className="lista-compras-lista">
             {items[categoria].map((item, index) => (
