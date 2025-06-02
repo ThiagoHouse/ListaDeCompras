@@ -134,7 +134,7 @@ export default function Home() {
         {categorias.map((categoria) => (
           <div key={categoria} style={{ marginBottom: 24 }}>
             <h2 className="categoria-titulo" style={{ marginBottom: 8, marginTop: 16 }}>{categoria}</h2>
-            <div className="pb-2" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
+            <div className="pb-2 adicionar-container" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
               <input
                 className="input"
                 type="text"
@@ -145,7 +145,9 @@ export default function Home() {
                 }
                 onKeyDown={e => e.key === "Enter" && addItem(categoria)}
               />
-              <button className="botao-adicionar" onClick={() => addItem(categoria)}><FaPlus /></button>
+              <button className="botao-adicionar" onClick={() => addItem(categoria)}>
+                <FaPlus />
+              </button>
             </div>
             <ul className="lista-compras-lista">
               {items[categoria].map((item, index) => (
@@ -170,7 +172,7 @@ export default function Home() {
                       style={{ flex: 1, cursor: "pointer" }}
                       onClick={() => toggleCheck(categoria, index)}
                     >
-                     {item.text}
+                      {item.text}
                     </span>
                   )}
                   <button

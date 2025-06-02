@@ -97,6 +97,13 @@ body {
   transition: background 0.2s;
 }
 
+.adicionar-container {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
 .lista-compras-item button:hover {
   background: #d1d1d1;
 }
