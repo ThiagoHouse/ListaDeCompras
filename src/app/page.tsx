@@ -150,22 +150,50 @@ export default function Home() {
             <ul className="lista-compras-lista">
               {items[categoria].map((item, index) => (
                 <li
-  key={index}
-  className={`lista-compras-item${item.checked ? " checked" : ""}`}
->
-  <span
-    style={{ flex: 1, cursor: "pointer" }}
-    onClick={() => toggleCheck(categoria, index)}
-  >
-    {item.text}
-  </span>
-  <button className="botao-editar" onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}>
-    <FaEdit />
-  </button>
-  <button className="botao-remover" onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}>
-    <FaTrash />
-  </button>
-</li>
+                  key={index}
+                  className={`lista-compras-item${item.checked ? " checked" : ""}`}
+                >
+                  {editing.categoria === categoria && editing.index === index ? (
+                    <input
+                      className="input"
+                      style={{ flex: 1 }}
+                      value={editingText}
+                      autoFocus
+                      onChange={e => setEditingText(e.target.value)}
+                      onBlur={saveEdit}
+                      onKeyDown={e => {
+                        if (e.key === "Enter") saveEdit();
+                      }}
+                    />
+                  ) : (
+                    <span
+                      style={{ flex: 1, cursor: "pointer" }}
+                      onClick={() => toggleCheck(categoria, index)}
+                    >
+                      {item.text}
+                    </span>
+                  )}
+                  <button
+                    className="botao-editar"
+                    onClick={e => {
+                      e.stopPropagation();
+                      startEdit(categoria, index);
+                    }}
+                    style={{ marginLeft: 8 }}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className="botao-remover"
+                    onClick={e => {
+                      e.stopPropagation();
+                      removeItem(categoria, index);
+                    }}
+                    style={{ marginLeft: 8 }}
+                  >
+                    <FaTrash />
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
