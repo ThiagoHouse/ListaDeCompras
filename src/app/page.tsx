@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa"; // Adicione esta linha
+
 
 const categorias = [
   "Bruto",
@@ -167,8 +169,8 @@ export default function Home() {
                 ) : (
                   <>
                     <span style={{ flex: 1 }}>{item.text}</span>
-                    <button onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}>Editar</button>
-                    <button onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}>Remover</button>
+                    <button onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}><FaEdit /></button>
+                    <button onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}><FaTrash /></button>
                   </>
                 )}
               </li>
