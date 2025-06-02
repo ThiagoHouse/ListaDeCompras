@@ -169,8 +169,8 @@ export default function Home() {
                 ) : (
                   <>
                     <span style={{ flex: 1 }}>{item.text}</span>
-                    <button onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}><FaEdit /></button>
-                    <button onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}><FaTrash /></button>
+                    <button className="botao-editar" onClick={() => startEdit(categoria, index)} style={{ marginLeft: 8 }}><FaEdit /></button>
+                    <button className="botao-remover" onClick={() => removeItem(categoria, index)} style={{ marginLeft: 8 }}><FaTrash /></button>
                   </>
                 )}
               </li>

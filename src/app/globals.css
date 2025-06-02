@@ -104,3 +104,19 @@ body {
   margin-top: 16px;
   color: #222;
 }
+
+.botao-editar {
+  background: #e6f0ff;
+  color: #2563eb;
+}
+.botao-editar:hover {
+  background: #dbeafe;
+}
+
+.botao-remover {
+  background: #ffe6e6;
+  color: #dc2626;
+}
+.botao-remover:hover {
+  background: #fecaca;
+}
