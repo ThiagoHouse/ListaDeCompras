@@ -169,13 +169,12 @@ export default function Home() {
     <div className="container">
       <h1 style={{
         textAlign: "center",
-        marginTop: 32,
-        marginBottom: 32,
+        marginTop: 8,
+        marginBottom: 8,
         fontFamily: "inherit",
         fontWeight: 700,
         fontSize: "1.2em",
         letterSpacing: "1px",
-        color: "#2563eb"
       }}>
         Lista de Compras
       </h1>
@@ -192,13 +191,13 @@ export default function Home() {
         </label>
       </div>
 
-      <div style={{ maxWidth: 500, margin: "10px auto", fontFamily: "sans-serif" }}>
+      <div style={{ maxWidth: 500, margin: "2px auto", fontFamily: "sans-serif" }}>
         {categorias.map((categoria) => (
-          <div key={categoria} style={{ marginBottom: 24 }}>
+          <div key={categoria} style={{ marginBottom: 4 }}>
             {categoriaEditando === categoria && modoEdicao ? (
               <input
                 className="input"
-                style={{ fontWeight: "bold", fontSize: "1em", marginBottom: 8, marginTop: 16 }}
+                style={{ fontWeight: "bold", fontSize: "1em", marginBottom: 8, marginTop: 8 }}
                 value={novoNomeCategoria}
                 autoFocus
                 onChange={e => setNovoNomeCategoria(e.target.value)}
@@ -212,7 +211,7 @@ export default function Home() {
             ) : (
               <h2
                 className="categoria-titulo"
-                style={{ marginBottom: 8, marginTop: 16, display: "flex", alignItems: "center" }}
+                style={{ marginBottom: 8, marginTop: 8, display: "flex", alignItems: "center" }}
               >
                 {categoria}
                 {modoEdicao && (
