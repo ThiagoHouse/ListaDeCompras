@@ -24,6 +24,7 @@ body {
   background: #f9f9f9;
   margin: 0;
   padding: 0 8px; /* Espaço lateral em todas as telas */
+  color: #3d3f46;
 }
 
 @media (min-width: 600px) {
@@ -58,7 +59,7 @@ body {
   content: "•";
   display: inline-block;
   margin-right: 8px;
-  color: #101624; /* escolha a cor que preferir */
+  color: #3d3f46; /* escolha a cor que preferir */
   font-size: 1.1em;
 }
 
