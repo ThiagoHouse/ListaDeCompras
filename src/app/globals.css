@@ -21,11 +21,19 @@
 }
 
 body {
-  font-family: 'Comfortaa', Arial, Helvetica, sans-serif;
+  /* font-family: 'Comfortaa', Arial, Helvetica, sans-serif;
   background: #f9f9f9;
   margin: 0;
   padding: 0 8px;
   /* Espaço lateral em todas as telas */
+ 
+  font-family: 'Comfortaa', Arial, Helvetica, sans-serif;
+  background-color: #f3f7fa;
+  background-image: url("data:image/svg+xml;utf8,<svg width='120' height='120' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'><g opacity='0.08'><rect x='10' y='10' width='40' height='20' rx='5' fill='%2352a0e0'/><rect x='70' y='70' width='30' height='30' rx='8' fill='%23a46feb'/></g></svg>");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  margin: 0;
+  padding: 0 8px;
   color: #3d3f46;
 }
 
@@ -164,4 +172,5 @@ h1 {
   margin-bottom: 16px;
   text-align: center;
   color: #a46feb;
+  font-family: 'Comfortaa', Arial, Helvetica, sans-serif;
 }
