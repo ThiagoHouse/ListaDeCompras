@@ -49,7 +49,7 @@ body {
   padding: 0px 0;
   padding-right: 12px;
   border-bottom: 1px solid #eee;
-  font-size: 14px;
+  font-size: 18px;
   background: #fff;
   border-radius: 3px;
 }
@@ -114,7 +114,7 @@ body {
 
 .categoria-titulo {
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 18px;
   margin-bottom: 2px;
   margin-top: 16px;
   color: #222;
