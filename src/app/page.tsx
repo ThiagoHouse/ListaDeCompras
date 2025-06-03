@@ -42,6 +42,9 @@ export default function Home() {
   // Estado para saber se está no client
   const [isClient, setIsClient] = useState(false);
 
+  // Modo de edição
+  const [modoEdicao, setModoEdicao] = useState(false);
+
   // Categorias editáveis
   const [categorias, setCategorias] = useState<string[]>(categoriasIniciais);
 
@@ -165,21 +168,34 @@ export default function Home() {
   return (
     <div className="container">
       <h1 style={{
-      textAlign: "center",
-      marginTop: 0,
-      marginBottom: 0,
-      fontFamily: "inherit",
-      fontWeight: 700,
-      fontSize: "1.0em",
-      letterSpacing: "1px",
-      color: "#2563eb"
-    }}>
-      Lista de Compras
-    </h1>
+        textAlign: "center",
+        marginTop: 32,
+        marginBottom: 32,
+        fontFamily: "inherit",
+        fontWeight: 700,
+        fontSize: "1.2em",
+        letterSpacing: "1px",
+        color: "#2563eb"
+      }}>
+        Lista de Compras
+      </h1>
+
+      <div style={{ textAlign: "right", marginBottom: 2 }}>
+        <label style={{ cursor: "pointer", fontWeight: 500, fontSize: "0.8em" }}>
+          <input
+            type="checkbox"
+            checked={modoEdicao}
+            onChange={e => setModoEdicao(e.target.checked)}
+            style={{ marginRight: 8 }}
+          />
+          Modo de Edição
+        </label>
+      </div>
+
       <div style={{ maxWidth: 500, margin: "10px auto", fontFamily: "sans-serif" }}>
         {categorias.map((categoria) => (
           <div key={categoria} style={{ marginBottom: 24 }}>
-            {categoriaEditando === categoria ? (
+            {categoriaEditando === categoria && modoEdicao ? (
               <input
                 className="input"
                 style={{ fontWeight: "bold", fontSize: "1em", marginBottom: 8, marginTop: 16 }}
@@ -199,42 +215,49 @@ export default function Home() {
                 style={{ marginBottom: 8, marginTop: 16, display: "flex", alignItems: "center" }}
               >
                 {categoria}
-                <button
-                  style={{ marginLeft: 8, fontSize: 14, padding: "2px 8px" }}
-                  onClick={e => {
-                    e.stopPropagation();
-                    setCategoriaEditando(categoria);
-                    setNovoNomeCategoria(categoria);
-                  }}
-                  title="Editar nome da categoria"
-                >
-                  <FaEdit />
-                </button>
+                {modoEdicao && (
+                  <button
+                    style={{ marginLeft: 8, fontSize: 14, padding: "2px 8px" }}
+                    onClick={e => {
+                      e.stopPropagation();
+                      setCategoriaEditando(categoria);
+                      setNovoNomeCategoria(categoria);
+                    }}
+                    title="Editar nome da categoria"
+                  >
+                    <FaEdit />
+                  </button>
+                )}
               </h2>
             )}
-            <div className="pb-2 adicionar-container" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
-              <input
-                className="input"
-                style={{ flex: 1 }}
-                type="text"
-                placeholder={`Novo item em ${categoria}`}
-                value={newItems[categoria] || ""}
-                onChange={e =>
-                  setNewItems({ ...newItems, [categoria]: e.target.value })
-                }
-                onKeyDown={e => e.key === "Enter" && addItem(categoria)}
-              />
-              <button className="botao-adicionar" onClick={() => addItem(categoria)}>
-                <FaPlus />
-              </button>
-            </div>
+            {modoEdicao && (
+              <div className="pb-2 adicionar-container" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
+                <input
+                  className="input"
+                  style={{ flex: 1 }}
+                  type="text"
+                  placeholder={`Novo item em ${categoria}`}
+                  value={newItems[categoria] || ""}
+                  onChange={e =>
+                    setNewItems({ ...newItems, [categoria]: e.target.value })
+                  }
+                  onKeyDown={e => e.key === "Enter" && addItem(categoria)}
+                />
+                <button
+                  className="botao-adicionar"
+                  onClick={() => addItem(categoria)}
+                >
+                  <FaPlus />
+                </button>
+              </div>
+            )}
             <ul className="lista-compras-lista">
               {items[categoria]?.map((item, index) => (
                 <li
                   key={index}
                   className={`lista-compras-item${item.checked ? " checked" : ""}`}
                 >
-                  {editing.categoria === categoria && editing.index === index ? (
+                  {editing.categoria === categoria && editing.index === index && modoEdicao ? (
                     <input
                       className="input"
                       style={{ flex: 1 }}
@@ -254,26 +277,30 @@ export default function Home() {
                       {item.text}
                     </span>
                   )}
-                  <button
-                    className="botao-editar"
-                    onClick={e => {
-                      e.stopPropagation();
-                      startEdit(categoria, index);
-                    }}
-                    style={{ marginLeft: 8 }}
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    className="botao-remover"
-                    onClick={e => {
-                      e.stopPropagation();
-                      removeItem(categoria, index);
-                    }}
-                    style={{ marginLeft: 8 }}
-                  >
-                    <FaTrash />
-                  </button>
+                  {modoEdicao && (
+                    <>
+                      <button
+                        className="botao-editar"
+                        onClick={e => {
+                          e.stopPropagation();
+                          startEdit(categoria, index);
+                        }}
+                        style={{ marginLeft: 8 }}
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        className="botao-remover"
+                        onClick={e => {
+                          e.stopPropagation();
+                          removeItem(categoria, index);
+                        }}
+                        style={{ marginLeft: 8 }}
+                      >
+                        <FaTrash />
+                      </button>
+                    </>
+                  )}
                 </li>
               ))}
             </ul>
