@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { FaEdit, FaTrash, FaPlus } from "react-icons/fa"; // Adicione esta linha
+import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
-
-const categorias = [
+// Inicialização padrão das categorias
+const categoriasIniciais = [
   "Bruto",
   "Padaria",
   "Carnes",
@@ -22,55 +22,57 @@ type ItemsPorCategoria = {
   [categoria: string]: Item[];
 };
 
-// Função para inicializar o estado dos itens (arrays)
-function getEmptyItems(): ItemsPorCategoria {
-  return {
-    Bruto: [],
-    Padaria: [],
-    Carnes: [],
-    "Produto de Limpeza": [],
-    Hortifrut: [],
-    Utilidades: [],
-  };
+function getEmptyItems(categorias: string[]): ItemsPorCategoria {
+  const obj: ItemsPorCategoria = {};
+  categorias.forEach(cat => {
+    obj[cat] = [];
+  });
+  return obj;
 }
 
-// Função para inicializar o estado dos inputs (strings)
-function getEmptyNewItems(): { [categoria: string]: string } {
-  return {
-    Bruto: "",
-    Padaria: "",
-    Carnes: "",
-    "Produto de Limpeza": "",
-    Hortifrut: "",
-    Utilidades: "",
-  };
+function getEmptyNewItems(categorias: string[]): { [categoria: string]: string } {
+  const obj: { [categoria: string]: string } = {};
+  categorias.forEach(cat => {
+    obj[cat] = "";
+  });
+  return obj;
 }
 
 export default function Home() {
   // Estado para saber se está no client
   const [isClient, setIsClient] = useState(false);
-  const [items, setItems] = useState<ItemsPorCategoria>(getEmptyItems);
 
-  // Inputs separados para cada categoria (corrigido para string)
-  const [newItems, setNewItems] = useState<{ [categoria: string]: string }>(getEmptyNewItems());
+  // Categorias editáveis
+  const [categorias, setCategorias] = useState<string[]>(categoriasIniciais);
 
-  // Edição
+  // Itens e inputs por categoria
+  const [items, setItems] = useState<ItemsPorCategoria>(() => getEmptyItems(categoriasIniciais));
+  const [newItems, setNewItems] = useState<{ [categoria: string]: string }>(() => getEmptyNewItems(categoriasIniciais));
+
+  // Edição de item
   const [editing, setEditing] = useState<{ categoria: string | null; index: number | null }>({ categoria: null, index: null });
   const [editingText, setEditingText] = useState("");
+
+  // Edição de categoria
+  const [categoriaEditando, setCategoriaEditando] = useState<string | null>(null);
+  const [novoNomeCategoria, setNovoNomeCategoria] = useState<string>("");
 
   // Carregar do localStorage só no client
   useEffect(() => {
     setIsClient(true);
     const saved = localStorage.getItem("lista-compras-items");
     if (saved) setItems(JSON.parse(saved));
+    const savedCats = localStorage.getItem("lista-compras-categorias");
+    if (savedCats) setCategorias(JSON.parse(savedCats));
   }, []);
 
   // Persistência no localStorage
   useEffect(() => {
     if (isClient) {
       localStorage.setItem("lista-compras-items", JSON.stringify(items));
+      localStorage.setItem("lista-compras-categorias", JSON.stringify(categorias));
     }
-  }, [items, isClient]);
+  }, [items, categorias, isClient]);
 
   // Adicionar item em uma categoria
   const addItem = (categoria: string) => {
@@ -104,13 +106,13 @@ export default function Home() {
     });
   };
 
-  // Iniciar edição
+  // Iniciar edição de item
   const startEdit = (categoria: string, index: number) => {
     setEditing({ categoria, index });
     setEditingText(items[categoria][index].text);
   };
 
-  // Salvar edição
+  // Salvar edição de item
   const saveEdit = () => {
     const { categoria, index } = editing;
     if (categoria !== null && index !== null) {
@@ -125,6 +127,38 @@ export default function Home() {
     setEditingText("");
   };
 
+  // Salvar edição de categoria
+  const salvarNomeCategoria = (categoriaAntiga: string) => {
+    const novoNome = novoNomeCategoria.trim();
+    if (
+      novoNome &&
+      novoNome !== categoriaAntiga &&
+      !categorias.includes(novoNome)
+    ) {
+      // Atualiza lista de categorias
+      const novasCategorias = categorias.map(cat =>
+        cat === categoriaAntiga ? novoNome : cat
+      );
+      // Atualiza os itens e os novos itens
+      const novosItems: ItemsPorCategoria = {};
+      const novosNewItems: { [categoria: string]: string } = {};
+      novasCategorias.forEach(cat => {
+        if (cat === novoNome) {
+          novosItems[cat] = items[categoriaAntiga] || [];
+          novosNewItems[cat] = newItems[categoriaAntiga] || "";
+        } else {
+          novosItems[cat] = items[cat] || [];
+          novosNewItems[cat] = newItems[cat] || "";
+        }
+      });
+      setCategorias(novasCategorias);
+      setItems(novosItems);
+      setNewItems(novosNewItems);
+    }
+    setCategoriaEditando(null);
+    setNovoNomeCategoria("");
+  };
+
   // Só renderiza após montar no client
   if (!isClient) return null;
 
@@ -133,11 +167,43 @@ export default function Home() {
       <div style={{ maxWidth: 500, margin: "40px auto", fontFamily: "sans-serif" }}>
         {categorias.map((categoria) => (
           <div key={categoria} style={{ marginBottom: 24 }}>
-            <h2 className="categoria-titulo" style={{ marginBottom: 8, marginTop: 16 }}>{categoria}</h2>
+            {categoriaEditando === categoria ? (
+              <input
+                className="input"
+                style={{ fontWeight: "bold", fontSize: "1em", marginBottom: 8, marginTop: 16 }}
+                value={novoNomeCategoria}
+                autoFocus
+                onChange={e => setNovoNomeCategoria(e.target.value)}
+                onBlur={() => salvarNomeCategoria(categoria)}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    salvarNomeCategoria(categoria);
+                  }
+                }}
+              />
+            ) : (
+              <h2
+                className="categoria-titulo"
+                style={{ marginBottom: 8, marginTop: 16, display: "flex", alignItems: "center" }}
+              >
+                {categoria}
+                <button
+                  style={{ marginLeft: 8, fontSize: 14, padding: "2px 8px" }}
+                  onClick={e => {
+                    e.stopPropagation();
+                    setCategoriaEditando(categoria);
+                    setNovoNomeCategoria(categoria);
+                  }}
+                  title="Editar nome da categoria"
+                >
+                  <FaEdit />
+                </button>
+              </h2>
+            )}
             <div className="pb-2 adicionar-container" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
               <input
                 className="input"
-                style={{ flex: 1 }} // Adicione esta linha
+                style={{ flex: 1 }}
                 type="text"
                 placeholder={`Novo item em ${categoria}`}
                 value={newItems[categoria] || ""}
@@ -151,7 +217,7 @@ export default function Home() {
               </button>
             </div>
             <ul className="lista-compras-lista">
-              {items[categoria].map((item, index) => (
+              {items[categoria]?.map((item, index) => (
                 <li
                   key={index}
                   className={`lista-compras-item${item.checked ? " checked" : ""}`}
