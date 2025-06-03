@@ -164,7 +164,19 @@ export default function Home() {
 
   return (
     <div className="container">
-      <div style={{ maxWidth: 500, margin: "40px auto", fontFamily: "sans-serif" }}>
+      <h1 style={{
+      textAlign: "center",
+      marginTop: 0,
+      marginBottom: 0,
+      fontFamily: "inherit",
+      fontWeight: 700,
+      fontSize: "1.0em",
+      letterSpacing: "1px",
+      color: "#2563eb"
+    }}>
+      Lista de Compras
+    </h1>
+      <div style={{ maxWidth: 500, margin: "10px auto", fontFamily: "sans-serif" }}>
         {categorias.map((categoria) => (
           <div key={categoria} style={{ marginBottom: 24 }}>
             {categoriaEditando === categoria ? (

@@ -125,7 +125,7 @@ body {
 /* Adicione ao seu globals.css */
 .container {
   max-width: 500px;
-  margin: 40px auto;
+  margin: 10px auto;
   padding: 0 16px;
   font-family: sans-serif;
 }
