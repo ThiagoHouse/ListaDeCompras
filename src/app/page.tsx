@@ -270,7 +270,7 @@ export default function Home() {
                     />
                   ) : (
                     <span
-                      style={{ flex: 1, cursor: "pointer" }}
+                      style={{ flex: 1, cursor: "pointer", margin: 8 }}
                       onClick={() => toggleCheck(categoria, index)}
                     >
                       {item.text}
