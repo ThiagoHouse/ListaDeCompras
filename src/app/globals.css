@@ -86,6 +86,7 @@ body {
 
 input {
     font-family: 'Comfortaa', Arial, Helvetica, sans-serif !important;
+    margin: 8px 8px;
 }
 
 .lista-compras-item button {
