@@ -104,9 +104,10 @@ input {
   margin-left: 4px;
   padding: 2px 8px;
   font-size: 14px;
-  background: #bdc2dd;
+  background: #52a0e0;
   border: none;
   border-radius: 3px;
+  color: #fff;
   cursor: pointer;
   transition: background 0.2s;
 }
