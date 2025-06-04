@@ -211,7 +211,7 @@ export default function Home() {
             ) : (
               <h2
                 className="categoria-titulo"
-                style={{ marginBottom: 8, marginTop: 8, display: "flex", alignItems: "center" }}
+                style={{ marginBottom: 8, display: "flex", alignItems: "center" }}
               >
                 {categoria}
                 {modoEdicao && (
