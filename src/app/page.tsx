@@ -230,12 +230,12 @@ export default function Home() {
               </h2>
             )}
             {modoEdicao && (
-              <div className="pb-2 adicionar-container" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
+              <div className="adicionar-container" style={{ display: "flex", gap: 8, marginBottom: 0 }}>
                 <input
                   className="input"
                   style={{ flex: 1 }}
                   type="text"
-                  placeholder={`Novo item em ${categoria}`}
+                  placeholder={` Novo item em ${categoria}`}
                   value={newItems[categoria] || ""}
                   onChange={e =>
                     setNewItems({ ...newItems, [categoria]: e.target.value })
