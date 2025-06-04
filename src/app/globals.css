@@ -103,6 +103,7 @@ input {
 .botao-adicionar {
   margin-left: 4px;
   padding: 2px 8px;
+  margin: 8px;
   font-size: 14px;
   background: #52a0e0;
   border: none;
