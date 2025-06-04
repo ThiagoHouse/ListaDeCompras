@@ -62,12 +62,19 @@ export default function Home() {
 
   // Carregar do localStorage só no client
   useEffect(() => {
-    setIsClient(true);
-    const saved = localStorage.getItem("lista-compras-items");
-    if (saved) setItems(JSON.parse(saved));
-    const savedCats = localStorage.getItem("lista-compras-categorias");
-    if (savedCats) setCategorias(JSON.parse(savedCats));
-  }, []);
+  setIsClient(true);
+  const saved = localStorage.getItem("lista-compras-items");
+  const savedCats = localStorage.getItem("lista-compras-categorias");
+  let loadedItems = getEmptyItems(categoriasIniciais);
+
+  if (saved) loadedItems = JSON.parse(saved);
+  if (saved) setItems(loadedItems);
+  if (savedCats) setCategorias(JSON.parse(savedCats));
+
+  // Se não houver nenhum item, ativa modo edição, senão desativa
+  const nenhumItem = Object.values(loadedItems).every(lista => lista.length === 0);
+  setModoEdicao(nenhumItem);
+}, []);
 
   // Persistência no localStorage
   useEffect(() => {
